@@ -8,14 +8,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-const (
-	host     = "localhost"
-	port     = 3306
-	user     = "root"
-	password = "password"
-	dbname   = "vaccine"
-)
-
 func main() {
 
 	// Connect to the MySQL database
