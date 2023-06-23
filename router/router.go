@@ -23,7 +23,7 @@ func NewRouter(db *sql.DB) *gin.Engine {
 	{
 		v1.POST("/beneficiaries", vaccineController.CreateBeneficiary)
 		v1.POST("/appointments", vaccineController.CreateAppointment)
-		// v1.GET("/appointments/{id}", getController.GetPetById)
+		v1.DELETE("/appointments/:id", vaccineController.Delete)
 
 	}
 

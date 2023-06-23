@@ -31,13 +31,4 @@ func main() {
 	// Start listening and serving requests
 	router.Run(":8080")
 
-	// // Define the API endpoints
-	// router.HandleFunc("/beneficiaries", createBeneficiary).Methods("POST")
-	// router.HandleFunc("/appointments", createAppointment).Methods("POST")
-	// router.HandleFunc("/appointments/{id}", getAppointment).Methods("GET")
-	// router.HandleFunc("/appointments/{id}", cancelAppointment).Methods("DELETE")
-
-	// // Start the server
-	// log.Println("Server started on port 8000")
-	// log.Fatal(http.ListenAndServe(":8000", router))
 }

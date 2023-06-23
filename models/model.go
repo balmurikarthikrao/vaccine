@@ -44,3 +44,43 @@ func CreateBeneficiary(db *sql.DB, beneficiary Beneficiary) (Beneficiary, error)
 	beneficiary.CreatedAt = time
 	return beneficiary, nil
 }
+
+func CheckAppointmentAvailable(db *sql.DB, appointment Appointment) (count int, err error) {
+
+	appointmentsCountQuery := "SELECT COUNT(*) FROM appointments WHERE date = ? AND timeSlot = ?"
+	err = db.QueryRow(appointmentsCountQuery, appointment.Date, appointment.TimeSlot).Scan(&count)
+	if err != nil {
+		return count, err
+	}
+	return
+}
+
+func CheckMultiple(db *sql.DB, appointment Appointment) (count int, err error) {
+
+	appointmentsCountQuery := "SELECT COUNT(*) FROM appointments WHERE beneficiaryId = ?"
+	err = db.QueryRow(appointmentsCountQuery, appointment.BeneficiaryID).Scan(&count)
+	if err != nil {
+		return count, err
+	}
+	return
+}
+
+func SlotAvailable(db *sql.DB, appointment Appointment) (count int, err error) {
+
+	appointmentsCountQuery := "SELECT COUNT(*) FROM appointments WHERE date = ? AND timeSlot = ? AND doseType = ?"
+	err = db.QueryRow(appointmentsCountQuery, appointment.Date, appointment.TimeSlot, appointment.DoseType).Scan(&count)
+	if err != nil {
+		return count, err
+	}
+	return
+}
+
+func InsertAppintment(db *sql.DB, appointment Appointment) (result sql.Result, err error) {
+
+	insertAppointmentQuery := "INSERT INTO appointments (beneficiaryId, date, timeSlot, doseType, vaccineCenter, created_at) VALUES (?, ?, ?, ?, ?, ?)"
+	result, err = db.Exec(insertAppointmentQuery, appointment.BeneficiaryID, appointment.Date, appointment.TimeSlot, appointment.DoseType, appointment.VaccineCenter, time.Now())
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
